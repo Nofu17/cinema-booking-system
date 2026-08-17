@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Book Ticket{% endblock %}
+{% block content %}
+
+<div class="page-top">
+  <h1>🎟 Book Ticket</h1>
+  <a href="{% url 'showtime_list' %}" class="btn btn-dark">Back →</a>
+</div>
+
+<div class="card" style="margin-bottom:1rem;border-color:#e50000;border-opacity:.3">
+  <div class="grid3" style="text-align:center">
+    <div>
+      <div style="color:#666;font-size:.75rem;text-transform:uppercase">Movie</div>
+      <div style="font-weight:700;margin-top:.3rem">{{ showtime.movie.title }}</div>
+    </div>
+    
+    <div>
+      <div style="color:#666;font-size:.75rem;text-transform:uppercase">Date & Time</div>
+      <div style="margin-top:.3rem">
+        {{ showtime.start_time|date:"Y-m-d" }} – {{ showtime.start_time|time:"H:i" }}
+      </div>
+    </div>
+    
+    <div>
+      <div style="color:#666;font-size:.75rem;text-transform:uppercase">Price / Seat</div>
+      <div style="color:#ffd700;font-weight:700;margin-top:.3rem">{{ showtime.price }} SR</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="max-width:500px">
+<form method="post">{% csrf_token %}
+  <div class="form-group">
+    <label>Full Name</label>
+    {{ form.customer_name }}
+  </div>
+  
+  <div class="form-group">
+    <label>Number of Seats</label>
+    {{ form.seats_booked }}
+  </div>
+
+  {% if booking %}
+  <div class="form-group"><label>Status</label>{{ form.status }}</div>
+  {% endif %}
+
+  <div style="display:flex;gap:.7rem;margin-top:1rem">
+    <button type="submit" class="btn btn-red">🎟 Confirm Booking</button>
+    <a href="{% url 'showtime_list' %}" class="btn btn-dark">Cancel</a>
+  </div>
+</form>
+</div>
+
+{% endblock %}

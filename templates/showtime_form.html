@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}{{ action }}{% endblock %}
+{% block content %}
+
+<div class="page-top">
+  <h1>{{ action }}</h1>
+  <a href="{% url 'showtime_list' %}" class="btn btn-dark">Back →</a>
+</div>
+
+<div class="card" style="max-width:580px">
+<form method="post">{% csrf_token %}
+  
+  {% if form.errors %}
+    <div style="color: #ff4444; background: #fff5f5; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+        <strong>تنبيه:</strong> يرجى التأكد من الحقول التالية: {{ form.errors }}
+    </div>
+  {% endif %}
+
+  <div class="form-group"><label>Movie</label>{{ form.movie }}</div>
+  
+  <div class="grid2">
+    <div class="form-group">
+        <label>Start Date & Time</label>
+        {{ form.start_time }}
+    </div>
+    <div class="form-group">
+        <label>Hall Name</label>
+        {{ form.hall_name }}
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="form-group">
+        <label>Price (SR)</label> 
+        {{ form.price }}
+    </div>
+    <div class="form-group">
+        <label>Available Seats</label>
+        {{ form.available_seats }}
+    </div>
+  </div>
+
+  <div style="display:flex;gap:.7rem;margin-top:1rem">
+    <button type="submit" class="btn btn-red">💾 Save</button>
+    <a href="{% url 'showtime_list' %}" class="btn btn-dark">Cancel</a>
+  </div>
+</form>
+</div>
+{% endblock %}

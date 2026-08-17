@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Movies{% endblock %}
+{% block content %}
+
+<div class="page-top">
+  <h1>🎬 Movies</h1>
+  <a href="{% url 'movie_create' %}" class="btn btn-red">+ Add Movie</a>
+</div>
+
+<div class="card" style="padding:0;overflow:hidden">
+<table>
+  <thead><tr>
+    <th>Title</th><th>Genre</th><th>Duration</th><th>Rating</th><th>Status</th><th>Actions</th>
+  </tr></thead>
+  <tbody>
+  {% for movie in movies %}
+  <tr>
+    <td><a href="{% url 'movie_detail' movie.pk %}" style="color:#f0f0f0;font-weight:600;text-decoration:none">{{ movie.title }}</a></td>
+    <td><span class="genre">{{ movie.genre }}</span></td>
+    <td style="color:#666">{{ movie.duration }} min</td>
+    <td><span class="rating">★ {{ movie.rating }}</span></td>
+    <td>
+      {% if movie.is_showing %}<span class="badge b-green">Showing</span>
+      {% else %}<span class="badge b-red">Not Showing</span>{% endif %}
+    </td>
+    <td>
+      <a href="{% url 'movie_update' movie.pk %}" class="btn btn-orange btn-sm">Edit</a>
+      <a href="{% url 'movie_delete' movie.pk %}" class="btn btn-sm" style="background:#3a0000;color:#ff4444;margin-left:.3rem">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="6" style="text-align:center;padding:2rem;color:#555">
+    No movies. <a href="{% url 'movie_create' %}" style="color:#e50000">Add one!</a>
+  </td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+
+<div class="page-top">
+  <h1>🎟 Bookings</h1>
+</div>
+
+<div class="card" style="padding:0;overflow:hidden">
+<table>
+  <thead><tr><th>Customer</th><th>Movie</th><th>Date & Time</th><th>Seats</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for b in bookings %}
+  <tr>
+    <td>
+      <div style="font-weight:600">{{ b.customer_name }}</div>
+      </td>
+    <td>{{ b.showtime.movie.title }}</td>
+    <td style="color:#888;font-size:.82rem">
+      {{ b.showtime.date }}<br>
+      {{ b.showtime.start_time }}
+    </td>
+    <td style="text-align:center">{{ b.seats_booked }}</td>
+    <td style="color:#ffd700">{{ b.total_price }} SR</td>
+    <td>
+      {% if b.status == 'confirmed' %}<span class="badge b-green">Confirmed</span>
+      {% elif b.status == 'cancelled' %}<span class="badge b-red">Cancelled</span>
+      {% else %}<span class="badge b-yellow">Pending</span>{% endif %}
+    </td>
+    <td>
+      <a href="{% url 'booking_delete' b.pk %}" class="btn btn-sm" style="background:#3a0000;color:#ff4444;">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="7" style="text-align:center;padding:2rem;color:#555">
+    No bookings yet. Go to <a href="{% url 'showtime_list' %}" style="color:#e50000">Showtimes</a> to book!
+  </td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endblock %}

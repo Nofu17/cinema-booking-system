@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Delete {{ type }}{% endblock %}
+{% block content %}
+
+<div class="page-top"><h1>Delete {{ type }}</h1></div>
+
+<div class="card" style="max-width:460px;border-color:#e50000;text-align:center;padding:2rem">
+  <div style="font-size:3rem;margin-bottom:1rem">⚠️</div>
+  <h2 style="margin-bottom:.6rem">Are you sure?</h2>
+  <p style="color:#666;margin-bottom:1.5rem">You are about to delete: <strong style="color:#fff">{{ object }}</strong></p>
+  <form method="post" style="display:flex;justify-content:center;gap:.7rem">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-red">🗑 Yes, Delete</button>
+    <a href="javascript:history.back()" class="btn btn-dark">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

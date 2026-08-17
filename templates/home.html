@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Home – CinemaOne{% endblock %}
+{% block content %}
+
+<div style="text-align:center;padding:2.5rem 0 2rem">
+  <h1 style="font-size:3rem;font-weight:700;letter-spacing:3px">
+    🎬 CINEMA<span style="color:#e50000">One</span>
+  </h1>
+  <p style="color:#666;margin-top:.5rem">Cinema Management System</p>
+</div>
+
+<div class="grid3" style="margin-bottom:2.5rem">
+  <div class="stat-box">
+    <div class="stat-num">{{ total_movies }}</div>
+    <div class="stat-label">Total Movies</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:#ffd700">{{ total_bookings }}</div>
+    <div class="stat-label">Confirmed Bookings</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-num" style="color:#00c850">{{ movies|length }}</div>
+    <div class="stat-label">Now Showing</div>
+  </div>
+</div>
+
+<div class="page-top">
+  <h1>Now Showing</h1>
+  <a href="{% url 'movie_create' %}" class="btn btn-red">+ Add Movie</a>
+</div>
+
+<div class="grid3">
+  {% for movie in movies %}
+  <div class="movie-card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:.7rem">
+      <span class="genre">{{ movie.genre }}</span>
+      <span class="rating">★ {{ movie.rating }}</span>
+    </div>
+    <h3 style="font-size:1.05rem;margin-bottom:.5rem">{{ movie.title }}</h3>
+    <p style="color:#666;font-size:.8rem;margin-bottom:1rem;line-height:1.5">{{ movie.description|truncatewords:12 }}</p>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="color:#555;font-size:.78rem">⏱ {{ movie.duration }} min</span>
+      <a href="{% url 'movie_detail' movie.pk %}" class="btn btn-dark btn-sm">Details →</a>
+    </div>
+  </div>
+  {% empty %}
+  <div class="card" style="grid-column:1/-1;text-align:center;padding:2rem;color:#555">
+    No movies yet. <a href="{% url 'movie_create' %}" style="color:#e50000">Add the first one!</a>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
